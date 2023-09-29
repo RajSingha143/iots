@@ -37,3 +37,53 @@ print('New template position #' + str(positionNumber))
 except Exception as e:
 print('Enrollment fail.')
 print('Error : ' + str(e))
+
+
+
+
+def deleteFingerInDB():
+print "Delete your Finger data from Fingerprint Database"
+#========================== Start ============================
+try:
+positionNumber = input('Please enter the template position you
+want to delete (in range 0 to 1000): ')
+positionNumber = int(positionNumber)
+if ( fingerprint_module.deleteTemplate(positionNumber) == True
+):
+print('Template deleted successfully.')
+
+except Exception as e:
+print('Deletion fail.')
+print('Error : ' + str(e))
+
+
+
+
+
+try:
+lcd_string("Keep your finger ",LCD_LINE_1)
+lcd_string("on sensor... ",LCD_LINE_2)
+## Wait that finger is read
+while ( fingerprint_module.readImage() == False ):
+pass
+## Converts read image to characteristics and stores it in
+charbuffer 1
+fingerprint_module.convertImage(0x01)
+## Searchs template
+result = fingerprint_module.searchTemplate()
+positionNumber = result[0]
+accuracyScore = result[1]
+if ( positionNumber == -1 ):
+lcd_string("Unauthorized ",LCD_LINE_1)
+lcd_string("person... ",LCD_LINE_2)
+else:
+lcd_string("Authorized ",LCD_LINE_1)
+lcd_string("person... ",LCD_LINE_2)
+delaysec(3)
+except Exception as e:
+
+lcd_string("Failure ",LCD_LINE_1)
+lcd_string("searching... ",LCD_LINE_2)
+print('Error : ' + str(e))
+lcd_string("Choose option in ",LCD_LINE_1)
+lcd_string("Menu... ",LCD_LINE_2)
