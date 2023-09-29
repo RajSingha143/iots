@@ -1,0 +1,39 @@
+def enrollFingerInDB():
+print "Enroll your Finger into Fingerprint Database"
+#========================== Start ============================
+
+try:
+print('Keep your finger...')
+# wait till the person keep finger on module
+while ( fingerprint_module.readImage() == False ):
+pass
+# Transform read fingeprint image to characteristics and stores
+it in charbuffer 1
+fingerprint_module.convertImage(0x01)
+# Checks for duplicate template in database
+result = fingerprint_module.searchTemplate()
+positionNumber = result[0]
+if ( positionNumber >= 0 ):
+print('This fingerprint template already exists at position
+number = ' + str(positionNumber))
+print('Remove your finger...')
+delaysec(2)
+print('Keep your finger again...')
+## Wait that finger is read again
+while ( fingerprint_module.readImage() == False ):
+pass
+## Converts read image to characteristics and stores it in
+charbuffer 2
+fingerprint_module.convertImage(0x02)
+## Compares the charbuffers
+if ( fingerprint_module.compareCharacteristics() == 0 ):
+raise Exception('Fingers do not match')
+## Creates a template
+fingerprint_module.createTemplate()
+## Saves template at new position number
+positionNumber = fingerprint_module.storeTemplate()
+print('Finger enrolled successfully!')
+print('New template position #' + str(positionNumber))
+except Exception as e:
+print('Enrollment fail.')
+print('Error : ' + str(e))
