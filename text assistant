@@ -1,0 +1,41 @@
+import pyttsx3 #pip install pyttsx3
+# import speech_recognition as sr #pip install speechRecognition
+import datetime
+
+import webbrowser
+import os
+
+def wishMe():
+hour = int(datetime.datetime.now().hour)
+if hour>=0 and hour<12:
+print("Good Morning!")
+elif hour>=12 and hour<18:
+print("Good Afternoon!")
+else:
+print("Good Evening!")
+print("I am Celena Ma'am. Please tell me how may I help you")
+
+
+
+if __name__ == "__main__":
+wishMe()
+while True:
+# if 1:
+query = input()
+# Logic for executing tasks based on query
+
+if 'open youtube' in query:
+print('What do you want to search')
+msg=input()
+webbrowser.open("https://www.youtube.com/results?search_query="+msg)
+elif 'open google' in query:
+print('What do you want to search')
+msg=input()
+webbrowser.open("https://www.google.com/search?q="+msg)
+elif 'open wikipedia' in query:
+webbrowser.open("www.wikipedia.com")
+elif 'the time' in query:
+strTime = datetime.datetime.now().strftime("%H:%M:%S")
+print(f"Sir, the time is {strTime}")
+else:
+webbrowser.open("www."+query+".com")
