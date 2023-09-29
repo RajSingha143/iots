@@ -1,0 +1,62 @@
+def writeToRFIDTag():
+reader = SimpleMFRC522.SimpleMFRC522()
+try:
+text = raw_input('Enter new ID for your TAG:')
+print("Place your RFID TAG on area of RFID reader
+module...")
+reader.write(text)
+print("Writing RFID TAG done")
+except Exception as e:
+print "Writing RFID TAG fail."
+print "error: " + str(e)
+pass
+def readFromRFIDTag():
+reader = SimpleMFRC522.SimpleMFRC522()
+try:
+print("Place your RFID TAG on area of RFID reader
+module...")
+id, text = reader.read()
+print(id)
+print(text)
+except Exception as e:
+print "Error reading RFID tag."
+print "error:" + str(e)
+pass
+def deleteFromRFIDTag():
+reader = SimpleMFRC522.SimpleMFRC522()
+try:
+
+text = "
+"
+print("Place your RFID TAG on area of RFID reader
+module...")
+reader.write(text)
+print("Deleting ID from RFID TAG done")
+except Exception as e:
+print "Deleting ID from RFID TAG fail."
+print "error: " + str(e)
+pass
+pass
+def testOnLCD():
+#print "t7 here\n"
+lcd_init() #intialize 16x2 LCD module
+try:
+lcd_string("Keep your RFID ",LCD_LINE_1)
+lcd_string("TAG on reader... ",LCD_LINE_2)
+reader = SimpleMFRC522.SimpleMFRC522()
+id, text = reader.read()
+print(id)
+print(text)
+lcd_string("ID ",LCD_LINE_1)
+lcd_string(str(id) + " ",LCD_LINE_2)
+delaysec(1)
+lcd_string("Value ",LCD_LINE_1)
+lcd_string(str(text) + " ",LCD_LINE_2)
+delaysec(2)
+except Exception as e:
+lcd_string("Failure reading ",LCD_LINE_1)
+lcd_string("RFID module... ",LCD_LINE_2)
+print('Error : ' + str(e))
+lcd_string("Choose option in ",LCD_LINE_1)
+
+lcd_string("Menu... ",LCD_LINE_2)
